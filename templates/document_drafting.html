@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Document Drafting - Jurisai Assistant</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    body {
+      background-image: url('/static/images/AI-legal-assistant.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      font-family: 'Georgia', serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 800px;
+      background: rgb(255, 255, 255);
+      padding: 30px;
+      margin: 100px auto 40px auto;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px;
+      border: 1px solid #151414;
+      border-radius: 5px;
+    }
+
+    button {
+      background-color: #2c3e50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #34495e;
+    }
+
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      font-size: 0.9em;
+    }
+
+    footer a {
+      color: #ecf0f1;
+      margin: 0 5px;
+      text-decoration: none;
+    }
+
+    nav {
+      background-color: #2c3e50;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #ecf0f1;
+    }
+
+    nav .nav-links {
+      display: flex;
+      gap: 15px;
+    }
+
+    nav .nav-links a {
+      color: #ecf0f1;
+      text-decoration: none;
+      font-size: 0.95em;
+      white-space: nowrap;
+    }
+
+    nav .nav-links a:hover {
+      text-decoration: underline;
+      color: #3498db;
+    }
+
+    nav .nav-links a i {
+      margin-right: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Navbar Same as Home Page -->
+  <nav>
+    <div class="logo">
+      <i class="fas fa-gavel"></i>
+      <span>Jurisai Assistant</span>
+    </div>
+
+    <div class="nav-links">
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/chatbot"><i class="fas fa-robot"></i> AI Legal Chatbot</a>
+      <a href="/document_drafting"><i class="fas fa-file-signature"></i> Document Drafting</a>
+      <a href="/legal_dictionary"><i class="fas fa-book"></i> Legal Dictionary</a>
+      <a href="/legal_aid_checker"><i class="fas fa-hand-holding-usd"></i> Legal Aid Checker</a>
+      <a href="/case_law_finder"><i class="fas fa-search"></i> Case Law Finder</a>
+      <a href="/legal_compliance_checker"><i class="fas fa-check-circle"></i> Legal Compliance Checker</a>
+    </div>
+  </nav>
+
+  <!-- ✅ Main Container for Document Drafting -->
+  <div class="container">
+    <h2><i class="fas fa-file-signature" style="margin-right: 10px; color: #2c3e50;"></i> Document Drafting</h2>
+
+    <label for="docType">Select Document Type:</label>
+    <select id="docType">
+      <option>Service Agreement</option>
+      <option>Lease Agreement</option>
+      <option>Non-disclosure Agreement</option>
+      <option>Will</option>
+      <option>Power of Attorney</option>
+      <option>Employment Agreement</option>
+      <option>Rental Agreement</option>
+      <option>Legal Notice</option>
+      <option>Memorandum of Understanding (MOU)</option>
+      <option>Terms and Conditions</option>
+    </select>
+
+    <!-- General Fields for All Documents -->
+    <label for="partyNames">Parties Involved (Full Names):</label>
+    <input type="text" id="partyNames" placeholder="e.g., Rahul Sharma and XYZ Pvt Ltd">
+
+    <label for="address">Address:</label>
+    <input type="text" id="address" placeholder="Enter address of parties">
+
+    <label for="contact">Contact Info:</label>
+    <input type="text" id="contact" placeholder="Email or phone number">
+
+    <label for="clause">Custom Clauses:</label>
+    <textarea id="clause" rows="4" placeholder="Include any specific terms, scope, confidentiality, etc."></textarea>
+
+    <label for="jurisdiction">Governing Law / Jurisdiction:</label>
+    <input type="text" id="jurisdiction" placeholder="e.g., Delhi High Court">
+
+    <label for="signDate">Date of Signing:</label>
+    <input type="date" id="signDate">
+
+    <label for="signature">Party Signatures (Optional):</label>
+    <input type="text" id="signature" placeholder="Type signature or initials">
+
+    <!-- Dynamic Fields -->
+    <div id="dynamicFields"></div>
+
+    <button onclick="downloadDoc()">Download Document</button>
+  </div>
+
+  <!-- ✅ Footer Below Content -->
+  <footer>
+    <p>© 2025 Jurisai Assistant | <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+  </footer>
+
+  <!-- ✅ JS PDF Generator -->
+  <script>
+    // Handle Dynamic Fields based on Document Type
+    document.getElementById("docType").addEventListener("change", function() {
+      const docType = this.value;
+      const dynamicFieldsContainer = document.getElementById("dynamicFields");
+      dynamicFieldsContainer.innerHTML = ''; // Clear previous fields
+
+      if (docType === "Lease Agreement") {
+        dynamicFieldsContainer.innerHTML = `
+          <label for="duration">Lease Duration (Months):</label>
+          <input type="number" id="duration" placeholder="Enter lease duration in months">
+
+          <label for="payment">Payment Amount:</label>
+          <input type="text" id="payment" placeholder="Enter rent or payment amount">
+        `;
+      } else if (docType === "Service Agreement") {
+        dynamicFieldsContainer.innerHTML = `
+          <label for="serviceDetails">Service Details:</label>
+          <textarea id="serviceDetails" rows="4" placeholder="Describe the services being offered"></textarea>
+
+          <label for="duration">Service Duration (Months):</label>
+          <input type="number" id="duration" placeholder="Enter service duration">
+        `;
+      }
+      // Add more conditions for other document types as needed
+    });
+
+    // Handle Document Download
+    async function downloadDoc() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  const type = document.getElementById("docType").value;
+  const parties = document.getElementById("partyNames").value;
+  const address = document.getElementById("address").value;
+  const contact = document.getElementById("contact").value;
+  const clauses = document.getElementById("clause").value;
+  const jurisdiction = document.getElementById("jurisdiction").value;
+  const date = document.getElementById("signDate").value;
+  const signature = document.getElementById("signature").value;
+
+  let additionalContent = "";
+  if (type === "Lease Agreement") {
+    const duration = document.getElementById("duration").value;
+    const payment = document.getElementById("payment").value;
+    additionalContent = `Lease Duration: ${duration} months\nPayment: ${payment}`;
+  } else if (type === "Service Agreement") {
+    const serviceDetails = document.getElementById("serviceDetails").value;
+    const duration = document.getElementById("duration").value;
+    additionalContent = `Service Details: ${serviceDetails}\nService Duration: ${duration} months`;
+  }
+
+  let y = 10;
+  const lineHeight = 10;
+  const content = [
+    `Document Type: ${type}`,
+    `Parties: ${parties}`,
+    `Address: ${address}`,
+    `Contact Info: ${contact}`,
+    `Custom Clauses:\n${clauses}`,
+    `Governing Law: ${jurisdiction}`,
+    `Date of Signing: ${date}`,
+    `Signatures: ${signature}`,
+    additionalContent ? `Additional Info:\n${additionalContent}` : ""
+  ];
+
+  content.forEach(text => {
+    const lines = doc.splitTextToSize(text, 180); // wrap long lines
+    doc.text(lines, 10, y);
+    y += lines.length * lineHeight;
+  });
+
+  doc.save("document.pdf");
+}
+
+  </script>
+
+</body>
+</html>

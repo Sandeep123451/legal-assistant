@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Legal Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="dark-mode futuristic-bg">
+
+    <nav>
+        <div class="logo">
+            <i class="fas fa-gavel"></i>
+            <span>Jurisai Assistant</span>
+        </div>
+        <div class="nav-links">
+            <a href="/"><i class="fas fa-home"></i> Home</a>
+            <a href="/chatbot"><i class="fas fa-robot"></i> AI Legal Chatbot</a>
+            <a href="/document_drafting"><i class="fas fa-file-signature"></i> Document Drafting</a>
+            <a href="/legal_dictionary"><i class="fas fa-book"></i> Legal Dictionary</a>
+            <a href="/legal_aid_checker"><i class="fas fa-hand-holding-usd"></i> Legal Aid Checker</a>
+            <a href="/case_law_finder"><i class="fas fa-search"></i> Case Law Finder</a>
+            <a href="/legal_compliance_checker"><i class="fas fa-check-circle"></i> Legal Compliance Checker</a>
+        </div>
+        <div class="theme-toggle">
+            <button onclick="toggleTheme()" title="Toggle Theme">
+                <i class="fas fa-adjust"></i>
+            </button>
+        </div>
+        
+    </nav>
+
+    <div class="chat-container glassmorph">
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message bot">
+                <i class="fas fa-robot"></i>
+                <div class="message">Hello! I'm your futuristic legal assistant. Ask me anything.</div>
+            </div>
+        </div>
+        <div class="chat-input-box">
+            <input type="text" id="userInput" placeholder="Type your legal query..." />
+            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 Jurisai Assistant | <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+    </footer>
+
+    <script>
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            appendMessage('user', message);
+            input.value = '';
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message })
+            })
+            .then(response => response.json())
+            .then(data => {
+                setTimeout(() => {
+                    appendMessage('bot', data.response);
+                }, 400); // Delay to simulate typing
+            });
+        }
+
+        function appendMessage(sender, text) {
+            const chatMessages = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message', sender);
+
+            const icon = document.createElement('i');
+            icon.classList.add('fas', sender === 'bot' ? 'fa-robot' : 'fa-user');
+
+            const msg = document.createElement('div');
+            msg.classList.add('message');
+            msg.textContent = text;
+
+            messageDiv.appendChild(icon);
+            messageDiv.appendChild(msg);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+    </script>
+    <!-- Add audio -->
+<audio id="sendSound" src="{{ url_for('static', filename='audio/send.wav') }}"></audio>
+<audio id="receiveSound" src="{{ url_for('static', filename='audio/receive.wav') }}"></audio>
+
+<!-- Typing Indicator + Theme Toggle + Enhanced Messaging -->
+<script>
+    const sendSound = document.getElementById("sendSound");
+    const receiveSound = document.getElementById("receiveSound");
+
+    function sendMessage() {
+        const input = document.getElementById('userInput');
+        const message = input.value.trim();
+        if (!message) return;
+
+        appendMessage('user', message);
+        sendSound.play();
+        input.value = '';
+
+        showTypingIndicator(); // show "JurisAI is typing..."
+
+        fetch('/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message })
+        })
+        .then(response => response.json())
+        .then(data => {
+            hideTypingIndicator();
+            setTimeout(() => {
+                appendMessage('bot', data.response);
+                receiveSound.play();
+            }, 400);
+        });
+    }
+
+    function appendMessage(sender, text) {
+        const chatMessages = document.getElementById('chatMessages');
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message', sender, 'fade-in');
+
+        const avatar = document.createElement('img');
+        avatar.src = sender === 'bot' ? "/static/images/bot.png" : "/static/images/user.png";
+        avatar.classList.add('avatar');
+
+        const msg = document.createElement('div');
+        msg.classList.add('message');
+        msg.textContent = text;
+
+        messageDiv.appendChild(avatar);
+        messageDiv.appendChild(msg);
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function showTypingIndicator() {
+        appendMessage('bot', 'JurisAI is typing...');
+        const lastMessage = document.querySelector('.chat-message.bot:last-child .message');
+        lastMessage.classList.add('typing-indicator');
+    }
+
+    function hideTypingIndicator() {
+        const indicators = document.querySelectorAll('.typing-indicator');
+        indicators.forEach(e => e.parentElement.remove());
+    }
+
+    // Toggle Theme
+    function toggleTheme() {
+        const body = document.body;
+        body.classList.toggle('light-mode');
+        body.classList.toggle('dark-mode');
+        body.classList.toggle('futuristic-bg');
+        localStorage.setItem('theme', body.className);
+    }
+
+    // Load saved theme
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) document.body.className = savedTheme;
+    });
+</script>
+
+</body>
+</html>

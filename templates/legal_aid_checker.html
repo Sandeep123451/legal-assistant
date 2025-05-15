@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Legal Aid Checker</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <style>
+    /* Background same as homepage */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Arial', sans-serif;
+      background: url('/static/images/AI-legal-assistant.png') no-repeat center center fixed;
+      background-size: cover;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Nav matches homepage */
+    nav {
+      background-color: #2c3e50;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      flex-wrap: nowrap;
+    }
+
+    nav .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #ecf0f1;
+    }
+
+    nav .nav-links {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+    }
+
+    nav .nav-links a {
+      color: #ecf0f1;
+      text-decoration: none;
+      margin: 0 10px;
+      font-size: 0.95em;
+      white-space: nowrap;
+    }
+
+    nav .nav-links a:hover {
+      text-decoration: underline;
+      color: #3498db;
+    }
+
+    nav .nav-links a i {
+      margin-right: 6px;
+    }
+
+    /* Centered white box like Legal Dictionary */
+    .main-content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .legal-aid-container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 100%;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      text-align: left;
+    }
+
+    .legal-aid-container h2 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #2c3e50;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    .result {
+      display: none;
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    .result.success {
+      background-color: #e7f9e7;
+      color: #2e7d32;
+    }
+
+    .result.error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+
+    /* Footer same as homepage */
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px 0;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">
+      <i class="fas fa-gavel"></i>
+      <span>Jurisai Assistant</span>
+    </div>
+    <div class="nav-links">
+      <a href="/"><i class="fas fa-home"></i> Home</a>
+      <a href="/chatbot"><i class="fas fa-robot"></i> AI Legal Chatbot</a>
+      <a href="/document_drafting"><i class="fas fa-file-signature"></i> Document Drafting</a>
+      <a href="/legal_dictionary"><i class="fas fa-book"></i> Legal Dictionary</a>
+      <a href="/legal_aid_checker"><i class="fas fa-hand-holding-usd"></i> Legal Aid Checker</a>
+      <a href="/case_law_finder"><i class="fas fa-search"></i> Case Law Finder</a>
+      <a href="/legal_compliance_checker"><i class="fas fa-check-circle"></i> Legal Compliance Checker</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="legal-aid-container">
+      <h2><i class="fas fa-hand-holding-usd"></i> Legal Aid Eligibility Checker</h2>
+      <form id="eligibilityForm">
+        <div class="form-group">
+          <label for="income">Annual Household Income (before tax):</label>
+          <input type="number" id="income" required />
+        </div>
+
+        <div class="form-group">
+          <label for="household">Number of Household Members:</label>
+          <input type="number" id="household" required />
+        </div>
+
+        <div class="form-group">
+          <label for="residenceStatus">Are you a citizen or legal resident?</label>
+          <select id="residenceStatus" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="assets">Do you own any significant assets?</label>
+          <select id="assets" required>
+            <option value="no">No</option>
+            <option value="yes">Yes</option>
+          </select>
+        </div>
+
+        <button type="submit">Check Eligibility</button>
+      </form>
+
+      <div class="result" id="result"></div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 Jurisai Assistant | <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    document.getElementById('eligibilityForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      let income = parseFloat(document.getElementById('income').value);
+      let household = parseInt(document.getElementById('household').value);
+      let residence = document.getElementById('residenceStatus').value;
+      let assets = document.getElementById('assets').value;
+      let threshold = 30000;
+
+      let resultDiv = document.getElementById('result');
+      resultDiv.style.display = 'block';
+
+      if (residence === 'no') {
+        resultDiv.textContent = "You must be a legal resident or citizen.";
+        resultDiv.className = "result error";
+      } else if (income <= (threshold * household) && assets === 'no') {
+        resultDiv.textContent = "Congratulations! You are eligible for legal aid.";
+        resultDiv.className = "result success";
+      } else {
+        resultDiv.textContent = "Sorry, you are not eligible for legal aid.";
+        resultDiv.className = "result error";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,723 @@
+/* Global Styles */
+body {
+    background-color: #f4f4f9; /* Soft gray background */
+    color: #333; /* Dark text for readability */
+    font-family: 'Georgia', serif; /* Professional, serif font for legal look */
+    margin: 0;
+    padding: 0;
+    background-image: url('/static/images/AI-legal-assistant.png'); /* Use relative path to the image */
+    background-size: cover; /* Ensure the image covers the screen */
+    background-position: center; /* Center the image */
+    background-attachment: fixed; /* Keep the image fixed when scrolling */
+    background-repeat: no-repeat; /* Do not repeat the image */
+}
+
+
+/* Style the navigation bar */
+/* Style the navigation bar */
+nav {
+    background-color: #2c3e50; /* Dark Blue/Gray for professionalism */
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    flex-wrap: nowrap; /* Prevent text wrapping */
+}
+
+nav .logo {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ecf0f1; /* Light gray for logo text */
+}
+
+nav .nav-links {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap; /* Prevent text wrapping */
+}
+
+nav .nav-links a {
+    color: #ecf0f1; /* Light gray text */
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 0.95em; /* Reduced font size slightly */
+    font-family: 'Arial', sans-serif;
+    white-space: nowrap; /* Prevent wrapping of text in the navbar */
+}
+
+nav .nav-links a:hover {
+    text-decoration: underline;
+    color: #3498db; /* Highlight color on hover */
+}
+
+/* Ensure that navbar items are aligned properly */
+nav .nav-links a i {
+    margin-right: 6px; /* Space between icon and text */
+}
+
+
+/* Main container */
+.container {
+    width: 100%;
+    padding: 40px 20px; /* Add more padding for a cleaner layout */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Feature grid layout */
+.feature-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px; /* Applies vertical and horizontal spacing */
+    margin-top: 40px;
+    align-items: flex-start; /* 👈 Important: Align to top to allow vertical gap */
+}
+
+
+.feature-card {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Georgia', serif;
+    min-height: 250px; /* 👈 Add this line to avoid cards squishing */
+}
+
+
+
+.feature-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.feature-card .button {
+    background-color: #3498db; /* Bright blue for buttons */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1em;
+    margin-top: 10px;
+    display: inline-block;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card .button:hover {
+    background-color: #2980b9; /* Slightly darker blue on hover */
+}
+
+/* Footer Styling */
+.footer {
+    background-color: #2c3e50; /* Dark Blue/Gray */
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.footer a {
+    color: #3498db; /* Light blue for links */
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+/* Media query for responsiveness */
+@media screen and (max-width: 768px) {
+    .feature-section {
+        grid-template-columns: 1fr 1fr; /* Two columns on smaller screens */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .feature-section {
+        grid-template-columns: 1fr; /* One column on mobile screens */
+    }
+}
+
+/* Additional Styling for the content */
+h1, h2 {
+    color: #f8fafb; /* Dark Blue/Gray for headings */
+}
+
+h3 {
+    color: #131617; /* Lighter blue/gray for sub-headings */
+}
+/* Document Drafting Section */
+.document-drafting-container {
+    background-color: #ffffff; /* White background for contrast */
+    padding: 40px 30px; /* Padding for cleaner layout */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Slight shadow for depth */
+    max-width: 1000px; /* Ensure it’s not too wide */
+    margin: 40px auto;
+    font-family: 'Georgia', serif;
+}
+
+.document-drafting-container h1 {
+    font-size: 2.5em;
+    color: #2c3e50; /* Dark color for titles */
+    margin-bottom: 20px;
+}
+
+.document-drafting-container p {
+    font-size: 1.2em;
+    color: #34495e; /* Light gray for the paragraph text */
+    margin-bottom: 30px;
+}
+
+/* Form Styles */
+.document-drafting-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.document-drafting-container .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.document-drafting-container label {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.document-drafting-container input, 
+.document-drafting-container select, 
+.document-drafting-container textarea {
+    padding: 12px;
+    font-size: 1em;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 8px;
+    color: #333;
+}
+
+.document-drafting-container input[type="text"],
+.document-drafting-container input[type="date"],
+.document-drafting-container textarea,
+.document-drafting-container select {
+    font-family: 'Arial', sans-serif;
+}
+
+.document-drafting-container textarea {
+    font-family: 'Georgia', serif;
+    height: 200px; /* Height for textarea to allow multiple lines */
+}
+
+/* Submit Button Styles */
+.document-drafting-container button[type="submit"] {
+    background-color: #3498db; /* Button color */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 1.1em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    max-width: 250px;
+    align-self: flex-start; /* Align the button to the left */
+}
+
+.document-drafting-container button[type="submit"]:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Generated Document */
+#generatedDocument {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+}
+
+#generatedDocument h2 {
+    font-size: 2em;
+    color: #34495e;
+}
+
+#generatedDocument h3 {
+    font-size: 1.5em;
+    color: #2980b9;
+}
+
+#generatedDocument p {
+    font-size: 1.1em;
+    color: #2c3e50;
+    line-height: 1.6;
+}
+
+#generatedDocument .contract-term {
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #2980b9;
+}
+
+#generatedDocument .contract-term p {
+    font-weight: normal;
+    margin: 10px 0;
+}
+#downloadButton {
+    background-color: #3498db;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+}
+
+#downloadButton:hover {
+    background-color: #2980b9;
+}
+
+
+
+/* Legal Dictionary Specific Styles */
+
+/* Container for the dictionary page */
+/* Legal Dictionary Form Layout Fix */
+/* Container for the dictionary page */
+.dictionary-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 700px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to right, #ffffff, #eef6fb); /* gradient effect */
+    transition: all 0.3s ease-in-out;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Title Styling */
+.dictionary-container h2 {
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+    font-size: 2em;
+    color: #2c3e50; /* Dark color for professional appeal */
+}
+
+.definition-box:hover {
+    transform: scale(1.02); /* subtle hover pop */
+}
+
+.dictionary-container input[type="text"] {
+    padding: 10px 15px;
+    font-size: 1em;
+    width: 70%;
+    max-width: 400px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+}
+
+/* Button Styling */
+.dictionary-container button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.dictionary-container button:hover {
+    background-color: #2980b9;
+}
+
+/* Result Box Styling */
+#definitionResult {
+    margin-top: 25px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 500px;
+    text-align: left;
+    font-family: 'Georgia', serif;
+}
+
+.definition-box h3 {
+    color: #2980b9;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+.definition-box p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+
+#definitionResult h3 {
+    margin-bottom: 10px;
+    color: #34495e;
+    font-size: 1.2em;
+    display: flex;
+    align-items: center;
+}
+
+#definitionResult p {
+    font-size: 1em;
+    color: #2c3e50;
+    line-height: 1.5; 
+}
+
+/* Styling for error messages */
+#errorMessage {
+    color: red;
+    font-size: 1em;
+    font-weight: bold;
+}
+html, body {
+    height: 100%;
+}
+
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+.definition-box {
+    margin-top: 25px;
+    background-color: #f4f9fc;
+    border: 1px solid #cfe2f3;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    font-family: 'Georgia', serif;
+    color: #2c3e50;
+    transition: transform 0.3s ease;
+}
+
+/* Hover effect on result box */
+.definition-box:hover {
+    transform: scale(1.02); /* subtle hover pop */
+}
+
+#definitionResult h3 {
+    color: #2980b9;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+}
+
+#definitionResult p {
+    margin: 0;
+    line-height: 1.6;
+    color: #34495e;
+}
+
+/* Styling for error messages */
+#errorMessage {
+    color: red;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+/* Ensure dictionary search page is responsive */
+@media screen and (max-width: 768px) {
+    .dictionary-container input {
+        width: 100%; /* Full width for input on smaller screens */
+    }
+
+    .dictionary-container button {
+        width: 100%; /* Full width for button on smaller screens */
+    }
+}
+
+/* Ensure dictionary search page is responsive */
+@media screen and (max-width: 768px) {
+    .dictionary-container input {
+        width: 100%; /* Full width for input on smaller screens */
+    }
+
+    .dictionary-container button {
+        width: 100%; /* Full width for button on smaller screens */
+    }
+}
+.definition-wrapper {
+    margin-top: 30px;
+    width: 100%;
+    text-align: left;
+}
+
+.definition-box {
+    margin-top: 25px;
+    background-color: #f4f9fc;
+    border: 1px solid #cfe2f3;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    font-family: 'Georgia', serif;
+    color: #2c3e50;
+    transition: transform 0.3s ease;
+}
+#definitionResult h3::before {
+    content: "\f02d"; /* Font Awesome book icon */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    margin-right: 10px;
+    color: #2980b9;
+}
+
+
+textarea, input[type="text"], input[type="date"], select {
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-family: 'Arial', sans-serif;
+    font-size: 1em;
+    color: #333;
+}
+
+button[type="submit"] {
+    background-color: #3498db; /* Button color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1.1em;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Card for displaying generated document content */
+#generatedDocument {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+}
+
+/* Styling the form fields for a cleaner appearance */
+form label {
+    font-weight: bold;
+    color: #2c3e50; /* Dark text for labels */
+}
+
+form textarea {
+    font-family: 'Georgia', serif; /* Same font for consistency */
+}
+
+/* Enhance icons in navbar for legal touch */
+nav .nav-links a i {
+    margin-right: 8px;
+}
+
+/* Additional text styling */
+.intro-text {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+}
+
+.intro-text h1 {
+    color: #f1f4f7; /* Dark text */
+    font-size: 2.5em;
+    margin-bottom: 15px;
+}
+
+.intro-text p {
+    font-size: 1.2em;
+    color: #d7f1f3; /* Lighter gray for intro text */
+}
+/* FUTURISTIC STYLING */
+body.futuristic-bg {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    font-family: 'Poppins', sans-serif; /* Clean and readable */
+    color: #f1f1f1;
+}
+
+.glassmorph {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.chat-container {
+    max-width: 900px;
+    margin: 50px auto;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.chat-message {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+    animation: fadeIn 0.3s ease;
+}
+
+.chat-message .message {
+    padding: 12px 18px;
+    border-radius: 12px;
+    max-width: 70%;
+    font-size: 1em;
+    line-height: 1.6;
+}
+
+.chat-message.bot .message {
+    background: rgba(0, 255, 255, 0.1);
+    border-left: 4px solid cyan;
+    color: #aafaff;
+}
+
+.chat-message.user .message {
+    background: #3498db;
+    color: white;
+    margin-left: auto;
+    border-right: 4px solid #0ff;
+}
+
+.chat-input-box {
+    display: flex;
+    padding: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.chat-input-box input {
+    flex: 1;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    font-size: 1em;
+    background: #ffffff0f;
+    color: #fff;
+}
+
+.chat-input-box button {
+    background: #00bcd4;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    margin-left: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.chat-input-box button:hover {
+    background: #1de9b6;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+nav .logo,
+h1, h2, h3 {
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 1px;
+}
+/* Avatars */
+.chat-message .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin-right: 10px;
+    object-fit: cover;
+}
+
+/* Typing Indicator */
+.typing-indicator {
+    font-style: italic;
+    color: #00ffffb0;
+}
+
+/* Fade-in scroll effect */
+.fade-in {
+    animation: fadeInUp 0.4s ease-in-out;
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+    margin-left: 20px;
+}
+.theme-toggle button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+.theme-toggle button:hover {
+    color: #00ffff;
+}
+
+/* Light Mode */
+body.light-mode {
+    background: #f0f0f0;
+    color: #222;
+}
+body.light-mode .chat-message.user .message {
+    background: #007bff;
+}
+body.light-mode .chat-message.bot .message {
+    background: #e0f7fa;
+    color: #006064;
+}
+body.light-mode .chat-input-box input {
+    background: #fff;
+    color: #000;
+}

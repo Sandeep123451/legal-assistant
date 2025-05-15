@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legal Dictionary</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Minimal fix to make the dictionary box horizontal and keep footer at bottom */
+        html, body {
+            height: 100%;
+        }
+
+        .wrapper {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .dictionary-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .dictionary-container input[type="text"] {
+            width: 80%;
+            padding: 12px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        .dictionary-container button {
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .dictionary-container button:hover {
+            background-color: #2980b9;
+        }
+
+        #definitionResult {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .dictionary-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #2c3e50; /* Dark text for icon and title */
+    margin-bottom: 20px;
+}
+
+.dictionary-title h2 {
+    margin-top: 10px;
+    color: #2c3e50; /* Force black text even if inherited */
+}
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">
+                <i class="fas fa-gavel"></i>
+                <span>Jurisai Assistant</span>
+            </div>
+            <div class="nav-links">
+                <a href="/"><i class="fas fa-home"></i> Home</a>
+                <a href="/chatbot"><i class="fas fa-robot"></i> AI Legal Chatbot</a>
+                <a href="/document_drafting"><i class="fas fa-file-signature"></i> Document Drafting</a>
+                <a href="/legal_dictionary"><i class="fas fa-book"></i> Legal Dictionary</a>
+                <a href="/legal_aid_checker"><i class="fas fa-hand-holding-usd"></i> Legal Aid Checker</a>
+                <a href="/case_law_finder"><i class="fas fa-search"></i> Case Law Finder</a>
+                <a href="/legal_compliance_checker"><i class="fas fa-check-circle"></i> Legal Compliance Checker</a>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="dictionary-container">
+                <h2 style="color: #000;"><i class="fas fa-book" style="margin-right: 8px;"></i> Legal Dictionary</h2>
+                <input type="text" id="searchTerm" placeholder="Enter a legal term..." />
+                <br>
+                <button onclick="searchTerm()">Search</button>
+            
+                <div id="definitionWrapper" class="definition-wrapper" style="display: none;">
+                    <h3><i class="fas fa-scale-balanced" style="margin-right: 8px;"></i> Definition:</h3>
+                    <div id="definitionResult" class="definition-box" style="display: none;">
+                        <!-- Result will appear here -->
+                    </div>
+                    
+                </div>
+            </div>
+            
+                
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>© 2025 Jurisai Assistant | <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a></p>
+        </footer>
+    </div>
+
+    <script>
+        function searchTerm() {
+            const searchTerm = document.getElementById('searchTerm').value.trim();
+            if (!searchTerm) return;
+    
+            fetch('/legal_dictionary_search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ term: searchTerm })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Term not found.");
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('definitionWrapper').style.display = 'block';
+                document.getElementById('definitionResult').style.display = 'block';
+                document.getElementById('definitionResult').innerHTML = `
+                    <p>${data.response}</p>
+                `;
+            })
+            .catch(error => {
+                document.getElementById('definitionWrapper').style.display = 'block';
+                document.getElementById('definitionResult').style.display = 'block';
+                document.getElementById('definitionResult').innerHTML = `
+                    <p style="color: red;">${error.message}</p>
+                `;
+            });
+        }
+    </script>
+    
+    
+    
+    
+</body>
+</html>
+
+
